@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Passed on Planet Miller</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #141E30, #243B55);
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .time {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Time Passed on Planet Miller</h1>
+        <p class="time" id="millerTime">Calculating...</p>
+    </div>
+
+    <script>
+        // Interstellar release date
+        const releaseDate = new Date("2014-11-07");
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+
+        // Time dilation factor for Miller: 1 hour on Miller = 7 Earth years
+        const earthYearsPerMillerHour = 7;
+
+        function calculateMillerTime() {
+            const now = new Date();
+            const earthMilliseconds = now - releaseDate;
+
+            // Convert Earth time to Earth days
+            const earthDays = Math.floor(earthMilliseconds / millisecondsPerDay);
+
+            // Convert Earth time to "Miller time"
+            const millerHours = earthMilliseconds / (earthYearsPerMillerHour * 365.25 * millisecondsPerDay / 24);
+            const millerDays = Math.floor(millerHours / 24);
+            const millerHoursRemaining = Math.floor(millerHours % 24);
+
+            // Calculate remaining minutes and seconds
+            const millerMinutes = Math.floor((millerHours * 60) % 60);
+            const millerSeconds = Math.floor((millerHours * 3600) % 60);
+
+            // Display result
+            document.getElementById("millerTime").textContent = 
+                `${millerDays} days, ${millerHoursRemaining} hours, ${millerMinutes} minutes, and ${millerSeconds} seconds (on Miller)`;
+        }
+
+        // Initial calculation and update every second
+        calculateMillerTime();
+        setInterval(calculateMillerTime, 1000);
+    </script>
+</body>
+</html>
